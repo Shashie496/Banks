@@ -1,0 +1,22 @@
+package com.springboot.bank.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.hibernate.query.Page;
+
+import com.springboot.bank.entity.Bank;
+
+public interface BankService {
+
+	public Bank saveBank(Bank bank);
+	public List<Bank> getAllBanks();
+	public Bank findBankById(long id);
+	
+	//public Bank updateBank(long id, Bank bank);
+	
+	public Bank uupdateBank(long id, Bank bank);
+	
+	public Page<Bank> page(int page, int size);
+}
+

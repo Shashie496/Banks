@@ -1,0 +1,8 @@
+package com.springboot.bank.service;
+
+import com.springboot.bank.entity.Account;
+
+public interface AccountService {
+	
+	public Account saveAccount(Account account);
+}

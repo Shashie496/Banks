@@ -1,0 +1,5 @@
+package com.springboot.bank.entity;
+
+public class Account {
+
+}

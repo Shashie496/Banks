@@ -1,0 +1,5 @@
+package com.springboot.bank.service.impl;
+
+public class AccountServiceImpl {
+
+}

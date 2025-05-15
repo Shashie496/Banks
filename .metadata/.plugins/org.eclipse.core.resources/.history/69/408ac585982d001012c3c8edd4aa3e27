@@ -1,0 +1,11 @@
+package com.springboot.bank.entity;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Account {
+	
+	private long AccountNumber;
+	private String note;
+
+}

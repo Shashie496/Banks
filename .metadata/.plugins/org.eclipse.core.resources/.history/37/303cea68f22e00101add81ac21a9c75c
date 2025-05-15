@@ -1,0 +1,5 @@
+package com.springboot.bank.config;
+
+public class SecurityConfig {
+
+}

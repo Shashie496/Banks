@@ -1,0 +1,43 @@
+package com.springboot.bank.service.impl;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.springboot.bank.entity.Bank;
+import com.springboot.bank.repository.AccountRepository;
+import com.springboot.bank.repository.BankRepository;
+import com.springboot.bank.service.BankService;
+
+@Service
+public class BankServicempl implements BankService {
+
+	@Autowired
+	private BankRepository bankRepo;
+	
+
+	@Override
+	public Bank saveBank(Bank bank) {
+
+		
+		if(bank.getAccount()!=null) {
+			bank.getAccount().setBank(bank);
+		}
+		return bankRepo.save(bank);
+	}
+
+	@Override
+	public List<Bank> getAllBanks() {
+		
+		return bankRepo.findAll();
+	}
+
+	@Override
+	public Optional<Bank> findBankById(long id) {
+		return bankRepo.findById(id).orElseThrow(()->new ResourseNotFoundException("not there please check"));
+		 
+	}
+
+}

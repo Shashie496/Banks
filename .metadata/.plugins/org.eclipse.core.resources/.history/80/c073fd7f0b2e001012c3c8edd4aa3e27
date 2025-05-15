@@ -1,0 +1,37 @@
+package com.springboot.bank.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springboot.bank.entity.Bank;
+import com.springboot.bank.service.impl.AccountServiceImpl;
+import com.springboot.bank.service.impl.BankServicempl;
+
+@RestController
+@RequestMapping("/bank")
+public class BankController {
+	
+	@Autowired
+	private AccountServiceImpl accountImp;
+	
+	@Autowired
+	private BankServicempl bankImp;
+	
+	
+	 @PostMapping("/save")
+	  public Bank createBank(@RequestBody Bank bank) {
+	        return bankImp.saveBank(bank);
+	    }
+	 
+	 @GetMapping("/get")
+	 public List<Bank> getAllBank(){
+		 return bankImp.getAllBanks();
+	 }
+
+}

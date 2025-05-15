@@ -1,0 +1,8 @@
+package com.springboot.bank.service;
+
+import com.springboot.bank.entity.Bank;
+
+public interface BankService {
+
+	private Bank saveBank(Bank bank);
+}

@@ -1,0 +1,104 @@
+package com.springboot.bank.service.impl;
+
+import java.util.List;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+
+import com.springboot.bank.entity.Account;
+import com.springboot.bank.entity.Bank;
+import com.springboot.bank.exception.ResourseNotFoundException;
+import com.springboot.bank.repository.AccountRepository;
+import com.springboot.bank.repository.BankRepository;
+import com.springboot.bank.service.BankService;
+
+@Service
+public class BankServicempl implements BankService {
+
+	@Autowired
+	private BankRepository bankRepo;
+	
+
+	@Override
+	public Bank saveBank(Bank bank) {
+
+		
+		if(bank.getAccount()!=null) {
+			bank.getAccount().setBank(bank);
+		}
+		return bankRepo.save(bank);
+	}
+
+	@Override
+	public List<Bank> getAllBanks() {
+		
+		return bankRepo.findAll();
+	}
+
+	@Override
+	public Bank findBankById(long id) {
+		return bankRepo.findById(id).orElseThrow(()->new ResourseNotFoundException("not there please check Bank"));
+		 
+	}
+
+//	@Override
+//	public Bank updateBank(long id, Bank bank) {
+//		
+//		Optional<Bank> bank1 = bankRepo.findById(id);
+//		Bank b1 = bank1.get();
+//	
+//		
+//		b1.setAccount(bank.getAccount());
+//		b1.setEmail(bank.getEmail());
+//	
+//		b1.setMobile(bank.getMobile());
+//		b1.setName(bank.getName());
+//	
+//		
+//		return bankRepo.save(b1);
+//	}
+	
+	@Override
+	public Bank uupdateBank(long id, Bank bank) {
+	    Optional<Bank> optionalBank = bankRepo.findById(id);
+	    if (optionalBank.isPresent()) {
+	        Bank existingBank = optionalBank.get();
+
+	        existingBank.setName(bank.getName());
+	        existingBank.setEmail(bank.getEmail());
+	        existingBank.setMobile(bank.getMobile());
+	        existingBank.setBankName(bank.getBankName());
+
+	        Account account = bank.getAccount();
+	        if (account != null) {
+	            account.setBank(existingBank); // maintain the bi-directional relationship
+	            existingBank.setAccount(account);
+	        }
+
+	        return bankRepo.save(existingBank);
+	    } else {
+	        throw new ResourseNotFoundException("cannot update for this id" +id);
+	    }
+	}
+
+	@Override
+	public Page<Bank> page(int page, int size) {
+		
+		PageRequest pageeee = PageRequest.of(page, size);
+	
+		return bankRepo.findAll(pageeee);
+	}
+
+	@Override
+	public void deleteCustomer(long id) {
+		
+		
+		bankRepo.deleteById(id);
+	}
+
+
+}

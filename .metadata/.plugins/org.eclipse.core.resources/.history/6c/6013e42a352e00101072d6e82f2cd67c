@@ -1,0 +1,14 @@
+package com.springboot.bank.service;
+
+import java.util.List;
+
+import com.springboot.bank.entity.Account;
+import com.springboot.bank.entity.Bank;
+
+public interface AccountService {
+
+	public Account saveAccount(Account account);
+
+	public List<Account> getAllAccounts();
+	public Account findAccountById(long id);
+}

@@ -1,0 +1,7 @@
+package com.springboot.bank.service.impl;
+
+import com.springboot.bank.service.BankService;
+
+public class BankRepositoryImpl implements BankService{
+
+}

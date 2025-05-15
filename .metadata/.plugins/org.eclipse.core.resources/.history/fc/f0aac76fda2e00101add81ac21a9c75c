@@ -1,0 +1,40 @@
+package com.springboot.bank.config;
+
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+@Configuration
+public class SecurityConfig {
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails admin = User.withDefaultPasswordEncoder()
+                .username("admin")
+                .password("admin123")
+                .roles("ADMIN")
+                .build();
+
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("user123")
+                .roles("USER")
+                .build();
+
+        return new InMemoryUserDetailsManager(admin, user);
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+            .authorizeRequests()
+                .antMatchers("/bank/add").hasRole("ADMIN")
+                .antMatchers("/bank/all").hasAnyRole("ADMIN", "USER")
+                .anyRequest().authenticated()
+            .and()
+            .formLogin();
+        return http.build();
+    }
+}

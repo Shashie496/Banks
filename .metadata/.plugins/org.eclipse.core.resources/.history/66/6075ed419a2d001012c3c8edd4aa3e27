@@ -1,0 +1,14 @@
+package com.springboot.bank.service.impl;
+
+import com.springboot.bank.entity.Bank;
+import com.springboot.bank.service.BankService;
+
+public class BankRepositoryImpl implements BankService{
+
+	@Override
+	public Bank saveBank(Bank bank) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

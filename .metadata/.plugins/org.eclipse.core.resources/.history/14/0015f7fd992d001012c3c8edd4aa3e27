@@ -1,0 +1,7 @@
+package com.springboot.bank.service.impl;
+
+import com.springboot.bank.service.AccountService;
+
+public class AccountServiceImpl implements AccountService {
+
+}
