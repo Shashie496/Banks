@@ -46,7 +46,7 @@ public class BankController {
 	@PostMapping("/save")
 	public ResponseEntity<Bank> createBank(@Valid @RequestBody Bank bank) {
 		Bank saved = bankImp.saveBank(bank);
-		return new ResponseEntity<>(saved, HttpStatus.CREATED);
+		return new ResponseEntity<>(saved, HttpStatus.ok);
 	}
 
 	@GetMapping("/get")
