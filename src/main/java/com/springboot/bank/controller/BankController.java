@@ -1,0 +1,83 @@
+package com.springboot.bank.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.springboot.bank.DTO.BankDTO;
+import com.springboot.bank.entity.Bank;
+import com.springboot.bank.service.impl.AccountServiceImpl;
+import com.springboot.bank.service.impl.BankServiceImpl;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/bank")
+@SecurityRequirement(name = "basicAuth")
+@Validated
+@Tag(name="Bank API'S")
+public class BankController {
+
+	@Autowired
+	private AccountServiceImpl accountImp;
+
+	@Autowired
+	private BankServiceImpl bankImp;
+
+//	 @PostMapping
+//	    public ResponseEntity<Bank> createBank(@Valid @RequestBody Bank bank) {
+//	        Bank savedBank = bankService.saveBank(bank);
+//	        return new ResponseEntity<>(savedBank, HttpStatus.CREATED);
+//	    }
+
+	@PostMapping("/save")
+	public ResponseEntity<Object> createBank(@Valid @RequestBody BankDTO bankDto) {
+		Bank save = bankImp.saveBank(bankDto);
+		return ResponseEntity.status(HttpStatus.CREATED).body(save);
+	}
+
+	@GetMapping("/get")
+	public ResponseEntity<List<BankDTO>> getAllBanks() {
+		return ResponseEntity.ok(bankImp.getAllBanks());
+	}
+
+	@GetMapping("/page")
+	public Page<Bank> GetAllBanks(@RequestParam int page, @RequestParam int size) {
+		return bankImp.page(page, size);
+	}
+
+	@GetMapping("/getId/{id}")
+	public BankDTO findByid(@PathVariable("id") long id) {
+		return bankImp.findBankById(id);
+	}
+
+	@PutMapping("/update/{id}")
+	public Bank updateBank(@PathVariable("id") long id, @RequestBody Bank bank) {
+		return bankImp.updateBank(id, bank);
+
+	}
+
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<String> deleteCustomer(@PathVariable("id") long id) {
+
+		bankImp.deleteCustomer(id);
+
+		return ResponseEntity.ok("Deleted Successfully");
+	}
+}
