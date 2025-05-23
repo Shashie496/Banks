@@ -1,6 +1,7 @@
 package com.springboot.bank.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import com.springboot.bank.enums.Status;
 import com.springboot.bank.enums.Type;
 
@@ -9,126 +10,115 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-@Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Table(name="bank")
-public class Bank {
 
-  
-    private String name;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "bank")
+public class Bank implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
-   
+    private String name;
+
+    @Column(unique = true)
     private String email;
 
-  
     private Long mobile;
-
 
     private String bankName;
 
+    private String password;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    
+
+    @Enumerated(EnumType.STRING)
     private Type type;
-  
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id")
     @JsonManagedReference
     private Account account;
 
-	public Bank() {
-		super();
-	}
+    public Bank() {}
 
-	public Bank(String name, long id, String email, Long mobile, String bankName, Status status, Type type,
-			Account account) {
-		super();
-		this.name = name;
-		this.id = id;
-		this.email = email;
-		this.mobile = mobile;
-		this.bankName = bankName;
-		this.status = status;
-		this.type = type;
-		this.account = account;
-	}
+    // Getters and setters
 
-	public String getName() {
-		return name;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public Long getMobile() {
-		return mobile;
-	}
+    public Long getMobile() {
+        return mobile;
+    }
 
-	public void setMobile(Long mobile) {
-		this.mobile = mobile;
-	}
+    public void setMobile(Long mobile) {
+        this.mobile = mobile;
+    }
 
-	public String getBankName() {
-		return bankName;
-	}
+    public String getBankName() {
+        return bankName;
+    }
 
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
 
-	public Status getStatus() {
-		return status;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setStatus(Status status) {
-		this.status = status;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public Type getType() {
-		return type;
-	}
+    public Status getStatus() {
+        return status;
+    }
 
-	public void setType(Type type) {
-		this.type = type;
-	}
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
-	public Account getAccount() {
-		return account;
-	}
+    public Type getType() {
+        return type;
+    }
 
-	public void setAccount(Account account) {
-		this.account = account;
-	}
+    public void setType(Type type) {
+        this.type = type;
+    }
 
-	@Override
-	public String toString() {
-		return "Bank [name=" + name + ", id=" + id + ", email=" + email + ", mobile=" + mobile + ", bankName="
-				+ bankName + ", status=" + status + ", type=" + type + ", account=" + account + "]";
-	}
-	
-	
+    public Account getAccount() {
+        return account;
+    }
 
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

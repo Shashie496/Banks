@@ -1,101 +1,60 @@
 package com.springboot.bank.entity;
 
+
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "account")
-public class Account {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long accountId;
+    private Long accountId;
 
-   
     private Long accountNumber;
 
-
-    private double initialDeposite;
-    
-  
+    private double initialDeposit;
 
     @OneToOne(mappedBy = "account")
     @JsonBackReference
     private Bank bank;
 
+    public Account() {}
 
+    // Getters and setters
 
-	public Account() {
-		super();
-	}
+    public Long getAccountId() {
+        return accountId;
+    }
 
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
 
+    public Long getAccountNumber() {
+        return accountNumber;
+    }
 
-	public Account(long accountId, Long accountNumber, double initialDeposite, Bank bank) {
-		super();
-		this.accountId = accountId;
-		this.accountNumber = accountNumber;
-		this.initialDeposite = initialDeposite;
-		this.bank = bank;
-	}
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
+    }
 
+    public double getInitialDeposit() {
+        return initialDeposit;
+    }
 
+    public void setInitialDeposit(double initialDeposit) {
+        this.initialDeposit = initialDeposit;
+    }
 
-	public long getAccountId() {
-		return accountId;
-	}
+    public Bank getBank() {
+        return bank;
+    }
 
-
-
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
-	}
-
-
-
-	public Long getAccountNumber() {
-		return accountNumber;
-	}
-
-
-
-	public void setAccountNumber(Long accountNumber) {
-		this.accountNumber = accountNumber;
-	}
-
-
-
-	public double getInitialDeposite() {
-		return initialDeposite;
-	}
-
-
-
-	public void setInitialDeposite(double initialDeposite) {
-		this.initialDeposite = initialDeposite;
-	}
-
-
-
-	public Bank getBank() {
-		return bank;
-	}
-
-
-
-	public void setBank(Bank bank) {
-		this.bank = bank;
-	}
-
-
-
-	@Override
-	public String toString() {
-		return "Account [accountId=" + accountId + ", accountNumber=" + accountNumber + ", initialDeposite="
-				+ initialDeposite + ", bank=" + bank + "]";
-	}
-    
-    
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
 }

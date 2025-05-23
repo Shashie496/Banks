@@ -10,9 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class BankDTO {
 
 	//@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

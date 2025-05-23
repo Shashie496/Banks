@@ -20,7 +20,7 @@ public class BankMapper {
 
 		Account account = new Account();
 		account.setAccountNumber(dto.getAccountNumber());
-		account.setInitialDeposite(100); // default initial deposit
+	//	account.setInitialDeposite(100); // default initial deposit
 		account.setBank(bank);
 	
 
